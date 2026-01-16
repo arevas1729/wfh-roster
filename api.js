@@ -1,5 +1,5 @@
 <script>
-const API_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+const API_URL = "https://script.google.com/macros/s/AKfycbwoFDK-p2uYtevJFv9mMobvvQVWfO2JF9sRhbpRkaUuKYaIf0BVPprNPWWMvGkB-UBKYg/exec";
 
 async function apiPost(action, data = {}) {
   const token = localStorage.getItem("token");

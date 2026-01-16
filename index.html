@@ -16,19 +16,22 @@
   <script src="api.js"></script>
   <script>
     async function login() {
-      const email = email.value;
-      const password = password.value;
-
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+    
+      const email = emailInput.value;
+      const password = passwordInput.value;
+    
       const res = await apiPost("login", { email, password });
-
+    
       if (res.error) {
-        error.innerText = res.error;
+        document.getElementById("error").innerText = res.error;
         return;
       }
-
+    
       localStorage.setItem("token", res.token);
       localStorage.setItem("role", res.role);
-
+    
       if (res.mustReset) {
         location.href = "reset.html";
       } else {
@@ -36,5 +39,6 @@
       }
     }
   </script>
+
 </body>
 </html>

@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Reset Password</title>
-</head>
+<head><base target="_top"><title>Reset Password</title></head>
 <body>
-  <h2>Set New Password</h2>
+<h2>Reset Password</h2>
+<input id="newPassword" type="password" placeholder="New Password"><br><br>
+<button onclick="resetPassword()">Submit</button>
+<p id="error" style="color:red;"></p>
+<p id="success" style="color:green;"></p>
 
-  <input id="newPass" type="password" placeholder="New Password"><br><br>
-  <button onclick="reset()">Save</button>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('token');
 
-  <p id="msg"></p>
-
-  <script src="api.js"></script>
-  <script>
-    async function reset() {
-      const newPassword = newPass.value;
-      const res = await apiPost("resetPassword", { newPassword });
-
-      if (res.success) {
-        location.href = "dashboard.html";
-      } else {
-        msg.innerText = res.error;
-      }
+function resetPassword() {
+  const newPassword = document.getElementById("newPassword").value;
+  google.script.run.withSuccessHandler(res => {
+    if(res.error) {
+      document.getElementById("error").innerText = res.error;
+    } else {
+      document.getElementById("success").innerText = "Password reset! Redirecting...";
+      setTimeout(()=>window.location.href="index.html", 1500);
     }
-  </script>
+  }).resetPassword({token, newPassword});
+}
+</script>
 </body>
 </html>

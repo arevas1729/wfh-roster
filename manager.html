@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manager</title>
+</head>
+<body>
+  <h2>Pending Requests</h2>
+
+  <table border="1">
+    <tr><th>Name</th><th>Date</th><th>Action</th></tr>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <script src="api.js"></script>
+  <script>
+    if (localStorage.getItem("role") !== "manager") {
+      document.body.innerHTML = "Access denied";
+    }
+
+    async function load() {
+      const data = await apiGet("pending");
+      data.forEach(r => {
+        rows.innerHTML += `<tr>
+          <td>${r.name}</td>
+          <td>${r.date}</td>
+          <td>
+            <button onclick="review(${r.id}, 'approve')">Approve</button>
+            <button onclick="review(${r.id}, 'deny')">Deny</button>
+          </td>
+        </tr>`;
+      });
+    }
+
+    async function review(id, action) {
+      await apiPost(action, { requestId: id });
+      location.reload();
+    }
+
+    load();
+  </script>
+</body>
+</html>

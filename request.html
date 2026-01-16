@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Request WFH</title>
+</head>
+<body>
+  <h2>Request Work From Home</h2>
+
+  <input type="date" id="date"><br><br>
+  <button onclick="submitReq()">Submit</button>
+
+  <p id="msg"></p>
+
+  <script src="api.js"></script>
+  <script>
+    async function submitReq() {
+      const res = await apiPost("requestWFH", { date: date.value });
+      msg.innerText = res.success ? "Request submitted" : res.error;
+    }
+  </script>
+</body>
+</html>

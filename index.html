@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <base target="_top">
   <title>WFH Login</title>
 </head>
 <body>
@@ -12,33 +13,21 @@
 
   <p id="error" style="color:red;"></p>
 
-  <!-- JS -->
-  <script src="api.js"></script>
   <script>
-    async function login() {
-      const emailInput = document.getElementById("email");
-      const passwordInput = document.getElementById("password");
-    
-      const email = emailInput.value;
-      const password = passwordInput.value;
-    
-      const res = await apiPost("login", { email, password });
-    
-      if (res.error) {
-        document.getElementById("error").innerText = res.error;
-        return;
-      }
-    
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("role", res.role);
-    
-      if (res.mustReset) {
-        location.href = "reset.html";
-      } else {
-        location.href = "dashboard.html";
-      }
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      google.script.run.withSuccessHandler(res => {
+        if(res.error) {
+          document.getElementById("error").innerText = res.error;
+        } else if(res.mustReset) {
+          window.location.href = "reset.html?token=" + res.token;
+        } else {
+          window.location.href = "dashboard.html?token=" + res.token;
+        }
+      }).login({email, password});
     }
   </script>
-
 </body>
 </html>

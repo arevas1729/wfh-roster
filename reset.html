@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reset Password</title>
+</head>
+<body>
+  <h2>Set New Password</h2>
+
+  <input id="newPass" type="password" placeholder="New Password"><br><br>
+  <button onclick="reset()">Save</button>
+
+  <p id="msg"></p>
+
+  <script src="api.js"></script>
+  <script>
+    async function reset() {
+      const newPassword = newPass.value;
+      const res = await apiPost("resetPassword", { newPassword });
+
+      if (res.success) {
+        location.href = "dashboard.html";
+      } else {
+        msg.innerText = res.error;
+      }
+    }
+  </script>
+</body>
+</html>

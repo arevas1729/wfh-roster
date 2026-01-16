@@ -1,4 +1,3 @@
-<script>
 const API_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
 async function apiPost(action, data = {}) {
@@ -16,4 +15,3 @@ async function apiGet(action) {
   const res = await fetch(`${API_URL}?action=${action}&token=${token}`);
   return res.json();
 }
-</script>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+  <h2>Upcoming WFH</h2>
+
+  <table border="1">
+    <tr><th>Name</th><th>Date</th></tr>
+    <tbody id="list"></tbody>
+  </table>
+
+  <br>
+  <a href="request.html">Request WFH</a> |
+  <a href="activity.html">Activity</a> |
+  <a href="manager.html">Manager</a>
+
+  <script src="api.js"></script>
+  <script>
+    async function load() {
+      const data = await apiGet("dashboard");
+      if (data.error) {
+        location.href = "index.html";
+        return;
+      }
+
+      data.forEach(r => {
+        list.innerHTML += `<tr><td>${r.name}</td><td>${r.date}</td></tr>`;
+      });
+    }
+    load();
+  </script>
+</body>
+</html>

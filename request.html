@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Request WFH</title>
-</head>
+<head><base target="_top"><title>Request WFH</title></head>
 <body>
-  <h2>Request Work From Home</h2>
+<h2>Request WFH</h2>
+<input id="date" type="date"><br><br>
+<button onclick="submitRequest()">Submit</button>
+<p id="error" style="color:red;"></p>
+<p id="success" style="color:green;"></p>
 
-  <input type="date" id="date"><br><br>
-  <button onclick="submitReq()">Submit</button>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('token');
 
-  <p id="msg"></p>
-
-  <script src="api.js"></script>
-  <script>
-    async function submitReq() {
-      const res = await apiPost("requestWFH", { date: date.value });
-      msg.innerText = res.success ? "Request submitted" : res.error;
+function submitRequest() {
+  const date = document.getElementById("date").value;
+  google.script.run.withSuccessHandler(res=>{
+    if(res.error) {
+      document.getElementById("error").innerText = res.error;
+    } else {
+      document.getElementById("success").innerText = "Request submitted!";
     }
-  </script>
+  }).requestWFH({token, date});
+}
+</script>
 </body>
 </html>

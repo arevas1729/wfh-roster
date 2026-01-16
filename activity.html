@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Activity</title>
+</head>
+<body>
+  <h2>All WFH Requests</h2>
+
+  <table border="1">
+    <tr><th>Name</th><th>Date</th><th>Status</th></tr>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <script src="api.js"></script>
+  <script>
+    async function load() {
+      const data = await apiGet("activity");
+      data.forEach(r => {
+        rows.innerHTML += `<tr>
+          <td>${r.name}</td>
+          <td>${r.date}</td>
+          <td>${r.status}</td>
+        </tr>`;
+      });
+    }
+    load();
+  </script>
+</body>
+</html>
